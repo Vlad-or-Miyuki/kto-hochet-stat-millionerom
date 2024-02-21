@@ -18,7 +18,7 @@ const playQuiz = () => {
     }
 
 
-    const userAnswers = readlineSync.question('Ваши ответы (через запятую без пробелов): ').split(',');
+const userAnswers = readlineSync.question('Ваши ответы (через запятую без пробелов): ').split(',');
 
 let correctCount = 0
 
