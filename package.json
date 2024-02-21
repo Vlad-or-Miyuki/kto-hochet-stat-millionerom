@@ -1,0 +1,23 @@
+{
+  "name": "kto-hochet-stat-millionerom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vlad-or-Miyuki/frontend-project-44/blob/main/src/cli.js"
+  },
+  "author": "Miyuki, ",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.56.0"
+  },
+  "dependencies": {
+    "nodejs": "^0.0.0",
+    "readline-sync": "^1.4.10"
+  }
+}
