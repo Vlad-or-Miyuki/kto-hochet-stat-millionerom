@@ -1,11 +1,11 @@
 import readlineSync from 'readline-sync';
 
 const getName = () => {
-  console.log('Welcome to the Super Qustion Games 3000!');
+  console.log('Добро пожаловать в супер игру "3000 впоросов!"');
 
-  const name = readlineSync.question('Please write your name here: ');
+  const name = readlineSync.question('Пожалуйста напишите своё имя: ');
 
-  console.log(`Hello, ${name}!`);
+  console.log(`Приветствуем, ${name}!`);
   return name;
 };
 
