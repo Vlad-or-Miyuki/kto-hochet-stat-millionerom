@@ -1,20 +1,16 @@
 import readlineSync from 'readline-sync';
 import getName from '../src/cli.js';
 import questionsBank from '../src/bank.js';
+import fs from 'fs'
 
-getName();
-
-
-
-
+const name = getName()
 
 console.log(`На данный момент в банке всего ${questionsBank.length - 1} вопросов.`)
 
 let countQuestions = readlineSync.question('Напишите то кол-во вопросов, на которое хотите ответить: ');
-console.log(Number(countQuestions))
 
-while ((typeof Number(countQuestions) !== 'number') || (questionsBank.length < Number(countQuestions)) || (Number(countQuestions) < 1)) {
-    if (typeof Number(countQuestions) !== 'number') {
+while ((String(Number(countQuestions)) === 'NaN') || (questionsBank.length < Number(countQuestions)) || (Number(countQuestions) < 1)) {
+    if (String(Number(countQuestions)) === 'NaN') {
         countQuestions = readlineSync.question('Это явно не число, давай по-нормальному: ')
     } else if (questionsBank.length < Number(countQuestions)) {
         countQuestions = readlineSync.question('Ну и как я должен выдать вопросов больше чем есть в банке? Ты головой то думай: ')
@@ -25,16 +21,20 @@ while ((typeof Number(countQuestions) !== 'number') || (questionsBank.length < N
     }
 }
 
-
-
 console.log('Вписывать ответы нужно в правильном регистре (так же как и в вариантах выбора) и через запятую без пробелов (если вы считаете что правильных ответов несколько).')
+console.log('Так же ответы нужно вписывать в порядке возрастания, как вам предложено в списке выбора ответов.')
 console.log('----------------------------------------------------------------------------')
 
-const playQuiz = () => {
+let countForCircleQuestions = 0
+let correctCount = 0
+let deathZone = 0
+let attempt = 0
+let win = 0
+let lose = 0
 
-    let countForCircleQuestions = 0
-    let correctCount = 0
-    let deathZone = 0
+const player = {}
+
+const playQuiz = () => {
 
     while (countForCircleQuestions < countQuestions) {
 
@@ -72,11 +72,55 @@ const playQuiz = () => {
 
     if (deathZone === 1) {
         console.log('Вы проиграли!')
+        lose += 1
+        attempt += 1
         deathZone = 0
     } else {
+        win += 1
+        attempt += 1
         console.log('Поздравляем вы выйграли!')
     }
+
+    player.userName = name
+    player.wins = win
+    player.loses = lose
+    player.attempts = attempt
+    
+    const addPlayer = (player) => {
+        try {
+            let players = [];
+    
+            if (fs.existsSync('src/players.json')) {
+                const fileContent = fs.readFileSync('src/players.json', 'utf-8');
+    
+                if (fileContent.trim() !== '') {
+                    players = JSON.parse(fileContent);
+                }
+            }
+    
+            const existingPlayer = players.find((p) => p.userName === player.userName);
+    
+            if (existingPlayer) {
+                existingPlayer.wins += player.wins;
+                existingPlayer.loses += player.loses;
+                existingPlayer.attempts += player.attempts;
+            } else {
+                players.push(player);
+            }
+    
+            fs.writeFileSync('src/players.json', JSON.stringify(players));
+            console.log('Игрок успешно добавлен или обновлен.');
+        } catch (error) {
+            console.error('Произошла ошибка при чтении/записи файла:', error);
+        }
+    };
+    addPlayer(player)    
 };
+
+lose = 0
+attempt = 0
+win = 0
 
 playQuiz();
 
+export default player

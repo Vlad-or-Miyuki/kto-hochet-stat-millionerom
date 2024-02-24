@@ -6,6 +6,7 @@ const getName = () => {
   const name = readlineSync.question('Пожалуйста напишите своё имя: ');
 
   console.log(`Приветствуем, ${name}!`);
+  
   return name;
 };
 
