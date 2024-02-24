@@ -5,7 +5,7 @@ import fs from 'fs'
 
 const name = getName()
 
-console.log(`На данный момент в банке всего ${questionsBank.length - 1} вопросов.`)
+console.log(`На данный момент в банке всего ${questionsBank.length} вопросов.`)
 
 let countQuestions = readlineSync.question('Напишите то кол-во вопросов, на которое хотите ответить: ');
 

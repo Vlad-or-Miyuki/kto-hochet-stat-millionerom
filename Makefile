@@ -6,3 +6,6 @@ lint:
 
 fix:
 	npx eslint . --fix
+
+game:
+	node question-game/questions.js
